@@ -1,5 +1,12 @@
+import AppProviders from '~/AppProviders';
+import { AppRoutes } from '~/AppRoutes';
+
 function App() {
-  return <h1 className="text-3xl font-bold underline">Hello world!</h1>;
+  return (
+    <AppProviders>
+      <AppRoutes />
+    </AppProviders>
+  );
 }
 
 export default App;
