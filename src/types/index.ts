@@ -25,7 +25,7 @@ export type BaseResponse<T> = {
   Data: T;
   TotalRecord: number;
   StatusCode: number;
-  Message: number;
+  Message: string;
 };
 
 export type BaseEntity = {

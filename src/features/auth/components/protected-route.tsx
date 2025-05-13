@@ -1,35 +1,16 @@
-// import { AuthenticatedTemplate, UnauthenticatedTemplate, useAccount } from '@azure/msal-react';
-// import { type PropsWithChildren } from 'react';
-// import { Navigate } from 'react-router-dom';
+import { type PropsWithChildren } from 'react';
+import { Navigate } from 'react-router-dom';
 
-// import { useAuthStore } from '../hooks/useAuthStore';
-// import { AuthProviders } from '../types/AuthProviders';
+import { useAuthStore } from '~/features/auth/hooks/use-auth-store';
+import { AuthProviders } from '~/features/auth/types/AuthProviders';
 
-// export const ProtectedRoute = ({ children }: PropsWithChildren) => {
-//   const account = useAccount();
-//   const authState = useAuthStore((state) => state.auth);
+export const ProtectedRoute = ({ children }: PropsWithChildren) => {
+  const authState = useAuthStore((state) => state.auth);
+  const { isAuthenticated, provider } = authState || {};
 
-//   const { isAuthenticated, provider } = authState || {};
+  if (isAuthenticated && provider === AuthProviders.Local) {
+    return children;
+  }
 
-//   // useEffect(() => {
-//   //   if (!account) return;
-
-//   //   axiosService.setAccessToken(account.idToken);
-
-//   //   return () => {
-//   //     axiosService.setAccessToken();
-//   //   };
-//   // }, [account]);
-
-//   if (isAuthenticated && provider === AuthProviders.Local) return children;
-
-//   return (
-//     <>
-//       <AuthenticatedTemplate>{account ? children : null}</AuthenticatedTemplate>
-
-//       <UnauthenticatedTemplate>
-//         <Navigate to="/auth/sign-in" replace />
-//       </UnauthenticatedTemplate>
-//     </>
-//   );
-// };
+  return <Navigate to="/auth/sign-in" replace />;
+};

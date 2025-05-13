@@ -1,18 +1,20 @@
 import { Suspense } from 'react';
 import { Navigate, Outlet } from 'react-router-dom';
 
-import { FullscreenFallback } from '../fallbacks';
+import { useAuthStore } from '~/features/auth/hooks/use-auth-store';
+import { FullscreenFallback } from '~/components/fallbacks';
 
 export const AuthLayout = () => {
-  return (
-    <>
-      {/* if (isAuthenticated) {
-    return <Navigate to="/" replace />;
-  } */}
+  const authState = useAuthStore((state) => state.auth);
+  const isAuthenticated = authState?.isAuthenticated;
 
-      <Suspense fallback={<FullscreenFallback />}>
-        <Outlet />
-      </Suspense>
-    </>
+  if (isAuthenticated) {
+    return <Navigate to="/" replace />;
+  }
+
+  return (
+    <Suspense fallback={<FullscreenFallback />}>
+      <Outlet />
+    </Suspense>
   );
 };

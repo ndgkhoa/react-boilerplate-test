@@ -1,4 +1,4 @@
-# Vite React
+# Vite React Boilerplate
 
 A brief description of what this project does and who it's for
 

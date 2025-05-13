@@ -3,8 +3,13 @@
 
 @import 'tailwindcss';
 
+@theme {
+  --font-beVietNamPro: 'Be Vietnam Pro', 'sans-serif';
+  --font-lexend: 'Lexend', 'sans-serif';
+}
+
 @layer base {
   * {
-    @apply m-0 box-border p-0;
+    @apply font-beVietNamPro m-0 box-border p-0;
   }
 }

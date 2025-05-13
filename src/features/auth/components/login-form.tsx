@@ -1,13 +1,14 @@
 import { Divider, Input, Button, Form, Flex, message } from 'antd';
-import { MicrosoftIcon } from '~/components/icons';
-// import { useLoginWithEmail } from '../hooks/mutations/use-login-with-email';
-// import { useLoginWithMicrosoft } from '../hooks/mutations/use-login-with-microsoft';
-// import { useAuthStore } from '../hooks/useAuthStore';
-// import { AuthProviders } from '../types/AuthProviders';
 import { useNavigate } from 'react-router-dom';
 
+import { GoogleIcon } from '~/components/icons';
+import { useLoginWithEmail } from '~/features/auth/hooks/mutations/use-login-with-email';
+import { useLoginWithGoogle } from '../hooks/mutations/use-login-with-google';
+import { useAuthStore } from '~/features/auth/hooks/use-auth-store';
+import { AuthProviders } from '~/features/auth/types/AuthProviders';
+
 type LoginFormType = {
-  UserName: string;
+  Email: string;
   Password: string;
 };
 
@@ -15,50 +16,48 @@ export const LoginForm = () => {
   const [form] = Form.useForm();
   const navigate = useNavigate();
 
-  // const { mutate: loginWithEmail, isPending: isLoginWithEmailPending } = useLoginWithEmail();
-  // const { mutate: loginWithMicrosoft, isPending: isLoginWithMicrosoftPending } =
-  //   useLoginWithMicrosoft();
-  // const { setAuth } = useAuthStore();
+  const { mutate: loginWithEmail, isPending: isLoginWithEmailPending } = useLoginWithEmail();
+  const { mutate: loginWithGoogle, isPending: isLoginWithGooglePending } = useLoginWithGoogle();
+  const { setAuth } = useAuthStore();
 
-  // const onLogin = (values: LoginFormType) => {
-  //   loginWithEmail(values, {
-  //     onSuccess: (response) => {
-  //       setAuth({
-  //         ...response.data.Data,
-  //         isAuthenticated: true,
-  //         provider: AuthProviders.Local,
-  //       });
-  //       navigate('/');
-  //     },
-  //     onError: () => {
-  //       message.error('Tài khoản hoặc mật khẩu không đúng!');
-  //     },
-  //   });
-  // };
+  const onLogin = (values: LoginFormType) => {
+    loginWithEmail(values, {
+      onSuccess: (response) => {
+        setAuth({
+          ...response.data.Data,
+          isAuthenticated: true,
+          provider: AuthProviders.Local,
+        });
+        navigate('/');
+      },
+      onError: () => {
+        message.error('Tài khoản hoặc mật khẩu không đúng!');
+      },
+    });
+  };
 
-  //const disabled = isLoginWithMicrosoftPending || isLoginWithEmailPending;
+  const disabled = isLoginWithEmailPending || isLoginWithGooglePending;
 
   return (
     <>
       <Flex wrap align="center" gap="small">
         <Button
-          // disabled={disabled}
-          //loading={isLoginWithMicrosoftPending}
+          disabled={disabled}
+          loading={isLoginWithGooglePending}
           className="flex-1"
           size="large"
-          icon={<MicrosoftIcon className="h-6 w-6 max-w-6 min-w-6" />}
+          icon={<GoogleIcon className="h-6 w-6 max-w-6 min-w-6" />}
           type="default"
-          // onClick={() => loginWithMicrosoft()}
+          onClick={() => loginWithGoogle()}
         >
-          <span className="font-light">Đăng nhập với Microsoft</span>
+          <span className="font-light">Đăng nhập với Google</span>
         </Button>
       </Flex>
       <Divider plain>Hoặc</Divider>
-      {/* <Form disabled={disabled} form={form} size="large" layout="vertical" onFinish={onLogin}> */}
-      <Form form={form} size="large" layout="vertical">
+      <Form disabled={disabled} form={form} size="large" layout="vertical" onFinish={onLogin}>
         <Form.Item<LoginFormType>
-          label="Tên đăng nhập"
-          name="UserName"
+          label="Email"
+          name="Email"
           rules={[{ required: true, message: 'Không được bỏ trống trường này' }]}
         >
           <Input size="large" />
@@ -71,7 +70,7 @@ export const LoginForm = () => {
           <Input.Password size="large" />
         </Form.Item>
         <Button
-          // loading={isLoginWithEmailPending}
+          loading={isLoginWithEmailPending}
           block
           className="mt-2"
           htmlType="submit"
