@@ -2,12 +2,11 @@ import { Route, Routes } from 'react-router-dom';
 import { lazy } from 'react';
 
 import { MainLayout, AuthLayout } from '~/components/layouts';
-import { NotFound } from './components/errors';
+import { NotFound } from '~/components/errors';
 import { ProtectedRoute } from '~/features/auth/components/protected-route';
 import Dashboard from '~/features/dashboard';
 const AuthRoutes = lazy(() => import('~/features/auth'));
-// const RoleControlRoutes = lazy(() => import('./features/role-control'));
-// const CatalogRoutes = lazy(() => import('./features/catalog'));
+const RoleControlRoutes = lazy(() => import('~/features/role-control'));
 
 export const AppRoutes = () => {
   return (
@@ -20,8 +19,7 @@ export const AppRoutes = () => {
         }
       >
         <Route path="/" element={<Dashboard />} />
-        {/* <Route path="/role-control/*" element={<RoleControlRoutes />} />
-        <Route path="/catalog/*" element={<CatalogRoutes />} /> */}
+        <Route path="/role-control/*" element={<RoleControlRoutes />} />
       </Route>
       <Route element={<AuthLayout />}>
         <Route path="/auth/*" element={<AuthRoutes />} />

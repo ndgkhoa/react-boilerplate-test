@@ -1,7 +1,7 @@
 import { Helmet } from 'react-helmet-async';
 
-import viagsLogoFull from '/viags-logo-full.png';
-import bgAuth1 from '/bg-auth-1.png';
+import viagsLogoFull from '/images/viags-logo-full.png';
+import bgAuth1 from '/images/bg-auth-1.png';
 import { LoginForm } from '~/features/auth/components/login-form';
 
 const SignIn = () => {
@@ -16,7 +16,7 @@ const SignIn = () => {
             <div className="flex h-12 justify-center">
               <img src={viagsLogoFull} alt="Viags Logo Full" className="h-full" />
             </div>
-            <h1 className="mt-8 mb-12 text-center text-2xl">Vite React Boilerplate</h1>
+            <h1 className="mt-8 mb-12 text-center text-2xl">Hệ thống quản lý</h1>
             <div className="mx-auto max-w-lg">
               <LoginForm />
             </div>

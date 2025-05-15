@@ -4,8 +4,8 @@ import type { MenuProps } from 'antd';
 import { Menu, Layout, Flex } from 'antd';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 
-import LogoVietnamAirlinesFull from '~/assets/images/logo-vietnam-airlines-full.png';
-import logoViags from '~/assets/images/logo-viags.png';
+import viagsLogoFull2 from '/images/viags-logo-full-2.png';
+import viagsLogo from '/images/viags-logo.png';
 
 const items: MenuProps['items'] = [
   { key: '/', icon: <HomeOutlined />, label: 'Trang chủ' },
@@ -14,9 +14,9 @@ const items: MenuProps['items'] = [
     icon: <TeamOutlined />,
     label: 'Phân quyền',
     children: [
-      { key: '/role-control/activities', label: 'Quyền' },
-      { key: '/role-control/roles', label: 'Nhóm quyền' },
-      { key: '/role-control/users', label: 'Người dùng' },
+      { key: '/role-control/permission', label: 'Quyền' },
+      { key: '/role-control/role', label: 'Nhóm quyền' },
+      { key: '/role-control/user', label: 'Người dùng' },
     ],
   },
 ];
@@ -33,18 +33,18 @@ export const Sidebar = memo(() => {
   const onClick: MenuProps['onClick'] = (e) => navigate(e.key);
 
   const renderedLogo = (
-    <Link to="/" className="flex h-16 items-center justify-center bg-blue-300">
+    <Link to="/" className="flex h-16 items-center justify-center">
       {collapsed ? (
-        <img src={logoViags} className="h-10" />
+        <img src={viagsLogo} className="h-10" />
       ) : (
-        <img src={LogoVietnamAirlinesFull} className="h-11" />
+        <img src={viagsLogoFull2} className="h-11" />
       )}
     </Link>
   );
 
   return (
     <Layout.Sider collapsible collapsed={collapsed} onCollapse={setCollapsed} width={280}>
-      <Flex align="center" justify="center" className="h-16 bg-red-300">
+      <Flex align="center" justify="center" className="h-16">
         {renderedLogo}
       </Flex>
       <Menu

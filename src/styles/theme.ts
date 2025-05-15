@@ -1,9 +1,10 @@
 import type { ThemeConfig } from 'antd';
 
 export const theme: ThemeConfig = {
-  token: {
-    borderRadius: 5,
-  },
+  // token: {
+  //   colorPrimary: '#283E55',
+  //   borderRadius: 5,
+  // },
   // components: {
   //   Button: {
   //     primaryShadow: 'none',
