@@ -1,29 +1,35 @@
 import type { AxiosRequestConfig } from 'axios';
+
 import { axiosClient } from '~/config/axios';
 import { env } from '~/config/env';
-import type { BaseFilterParams, BaseResponse } from '~/types';
-import type { User } from '~/features/role-control/user/types/User';
+import type { BaseResponse } from '~/types';
+import type {
+  CreateUserBody,
+  UpdateUserBody,
+  User,
+  UserSearchParams,
+} from '~/features/role-control/user/types/User';
 
 const BASE_URL = `${env.VITE_BASE_API_URL}/user`;
 
 export const userApi = {
-  getUsers: (params?: BaseFilterParams, config?: AxiosRequestConfig) => {
+  getAll: (params?: UserSearchParams, config?: AxiosRequestConfig) => {
     const url = `${BASE_URL}/get-list`;
     return axiosClient.get<BaseResponse<User[]>>(url, { params, ...config });
+  },
+  getOne: (id: User['Id'], config?: AxiosRequestConfig) => {
+    return axiosClient.get(`${BASE_URL}/get-by-id/${id}`, { ...config });
   },
   getInfoMine: () => {
     return axiosClient.get<{ User: User; Permissions: unknown[] }>(`${BASE_URL}/get-info-mine`);
   },
-  create: (user: FormData) => {
-    return axiosClient.post(`${BASE_URL}/create`, user);
+  create: (body: CreateUserBody) => {
+    return axiosClient.post(`${BASE_URL}/create`, body);
   },
-  update: (body: { id: string; formData: FormData }) => {
-    return axiosClient.put(`${BASE_URL}/update/${body.id}`, body.formData);
+  update: ({ Id, ...body }: UpdateUserBody) => {
+    return axiosClient.put(`${BASE_URL}/update/${Id}`, body);
   },
-  delete: (userId: string) => {
-    return axiosClient.delete(`${BASE_URL}/delete/${userId}`);
-  },
-  detail: (userId: string) => {
-    return axiosClient.get(`${BASE_URL}/get-by-id/${userId}`);
+  delete: (id: User['Id']) => {
+    return axiosClient.delete(`${BASE_URL}/delete/${id}`);
   },
 };

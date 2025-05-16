@@ -2,7 +2,7 @@ import { memo, Suspense, useEffect } from 'react';
 import { Layout } from 'antd';
 import { Outlet } from 'react-router-dom';
 
-import { axiosService } from '~/config/axios';
+import { axiosClient } from '~/config/axios';
 import { FullPageFallback } from '~/components/fallbacks';
 import { Sidebar, Navbar } from '~/components/ui';
 import { useAuthStore } from '~/features/auth/hooks/use-auth-store';
@@ -10,7 +10,7 @@ import { AuthProviders } from '~/features/auth/types/AuthProviders';
 
 const LayoutContent = memo(() => {
   return (
-    <Layout.Content className="h-[calc(100vh-64px)]">
+    <Layout.Content className="ml-4 h-[calc(100vh)]">
       <Suspense fallback={<FullPageFallback />}>
         <Outlet />
       </Suspense>
@@ -23,7 +23,7 @@ export const MainLayout = () => {
 
   useEffect(() => {
     if (authState?.provider === AuthProviders.Local) {
-      axiosService.setAccessToken(authState.AccessToken);
+      axiosClient.setAccessToken(authState.AccessToken);
     }
   }, [authState]);
 

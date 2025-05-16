@@ -23,4 +23,3 @@ instance.setAccessToken = (token?: string) => {
 };
 
 export const axiosClient = instance;
-export const axiosService = instance;

@@ -4,7 +4,7 @@ import { lazy } from 'react';
 //const ActivitiesPage = lazy(() => import('./pages/activities'));
 // const RolesPage = lazy(() => import('./pages/roles'));
 // const RolePage = lazy(() => import('./pages/role'));
-// const UsersPage = lazy(() => import('./pages/users'));
+const UsersPage = lazy(() => import('~/features/role-control/user/pages/users'));
 // const UserPage = lazy(() => import('./pages/user'));
 
 const RoleControlRoutes = () => {
@@ -18,7 +18,7 @@ const RoleControlRoutes = () => {
         {/* <Route path=":id" element={<RolePage />} /> */}
       </Route>
       <Route path="user">
-        <Route index element={<div>user</div>} />
+        <Route index element={<UsersPage />} />
         {/* <Route path=":id" element={<UserPage />} /> */}
       </Route>
       <Route path="*" element={<Navigate to="/not-found" />} />
