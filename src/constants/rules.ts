@@ -3,7 +3,7 @@ import type { Rule } from 'antd/es/form';
 const REQUIRED_ERROR_MESSAGE = 'Vui lòng nhập trường này';
 const FORMAT_ERROR_MESSAGE = 'Vui lòng nhập trường này';
 
-export const rules = {
+export const Rules = {
   required(message = REQUIRED_ERROR_MESSAGE): Rule {
     return { required: true, message };
   },

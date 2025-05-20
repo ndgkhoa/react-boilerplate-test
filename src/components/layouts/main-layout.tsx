@@ -10,7 +10,7 @@ import { AuthProviders } from '~/features/auth/types/AuthProviders';
 
 const LayoutContent = memo(() => {
   return (
-    <Layout.Content className="ml-4 h-[calc(100vh)]">
+    <Layout.Content className="h-[calc(100vh)]">
       <Suspense fallback={<FullPageFallback />}>
         <Outlet />
       </Suspense>

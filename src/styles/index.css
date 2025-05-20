@@ -12,4 +12,16 @@
   * {
     @apply font-beVietNamPro m-0 box-border p-0;
   }
+
+  /* Customize scroll bar */
+  * ::-webkit-scrollbar {
+    @apply w-4;
+  }
+
+  * ::-webkit-scrollbar-thumb {
+    @apply h-14 rounded-lg border-4 border-solid border-transparent bg-[rgba(96,96,96,0.5)] bg-clip-content;
+  }
+  * ::-webkit-scrollbar-thumb:hover {
+    @apply bg-[#606060];
+  }
 }

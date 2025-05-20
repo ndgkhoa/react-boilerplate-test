@@ -4,8 +4,8 @@ import { useNavigate } from 'react-router-dom';
 import type { To } from 'react-router-dom';
 import type { ReactNode } from 'react';
 
-import { Button } from '~/components/ui/button';
 import { cn } from '~/utils';
+import { Button } from '~/components/ui/button';
 
 interface Props {
   title?: string;
@@ -15,7 +15,7 @@ interface Props {
   stickyHeader?: boolean;
 }
 
-const Container = (props: Props) => {
+export const Container = (props: Props) => {
   const navigate = useNavigate();
   const { title, children, extraRight, showBack = false, stickyHeader = false } = props;
 
@@ -29,28 +29,26 @@ const Container = (props: Props) => {
   const tooltipTitle = typeof showBack === 'boolean' ? 'Trở về' : showBack?.tootipTitle;
 
   return (
-    <div className="relative h-full overflow-auto">
+    <div className="relative h-full overflow-auto px-4">
       {showContainerHeader && (
         <Flex
           align="center"
           justify="space-between"
-          className={cn('w-full bg-white px-4 py-2', { 'sticky top-0 z-10': stickyHeader })}
+          className={cn('!py-2', { 'sticky top-0 z-10': stickyHeader })}
           gap="small"
         >
           <Flex gap="small">
             {showBackButton && (
-              <Tooltip destroyTooltipOnHide title={tooltipTitle ?? 'Trở về'}>
+              <Tooltip destroyOnHidden title={tooltipTitle ?? 'Trở về'}>
                 <Button type="text" icon={<Undo2 />} onClick={onBack} />
               </Tooltip>
             )}
             <h1 className="m-0 text-2xl font-medium text-gray-800">{title}</h1>
           </Flex>
-          <div className="max-w-max">{extraRight}</div>
+          {extraRight}
         </Flex>
       )}
-      <div className="px-4 py-2">{children}</div>
+      {children}
     </div>
   );
 };
-
-export default Container;

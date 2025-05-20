@@ -1,10 +1,10 @@
 export * from './button';
 // export * from './card2';
-// export * from './modal';
+export * from './modal';
 export * from './footer';
 export * from './sidebar';
 export * from './navbar';
-// export * from './container';
+export * from './container';
 // export * from './tip';
 // export * from './popconfirm';
 // export * from './tooltip';

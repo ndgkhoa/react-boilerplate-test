@@ -2,7 +2,7 @@ import type { TableProps } from 'antd';
 import { useState } from 'react';
 import { useSearchParams } from 'react-router-dom';
 
-import { searchParamKeys } from '~/constants/search-param-keys';
+import { SearchParamKeys } from '~/constants/search-param-keys';
 
 const DEFAULT_PAGE_SIZE = '10';
 const DEFAULT_PAGE_INDEX = '1';
@@ -15,12 +15,12 @@ export const usePagination = () => {
     pageSize: Number(DEFAULT_PAGE_SIZE),
   });
 
-  const pageIndex = Number(searchParams.get(searchParamKeys.PAGE_INDEX) ?? DEFAULT_PAGE_INDEX);
-  const pageSize = Number(searchParams.get(searchParamKeys.PAGE_SIZE) ?? DEFAULT_PAGE_SIZE);
+  const pageIndex = Number(searchParams.get(SearchParamKeys.PAGE_INDEX) ?? DEFAULT_PAGE_INDEX);
+  const pageSize = Number(searchParams.get(SearchParamKeys.PAGE_SIZE) ?? DEFAULT_PAGE_SIZE);
 
   const onPaginationChange = (pageIndex: number, pageSize: number) => {
-    if (pageIndex) searchParams.set(searchParamKeys.PAGE_INDEX, pageIndex.toString());
-    if (pageSize) searchParams.set(searchParamKeys.PAGE_SIZE, pageSize.toString());
+    if (pageIndex) searchParams.set(SearchParamKeys.PAGE_INDEX, pageIndex.toString());
+    if (pageSize) searchParams.set(SearchParamKeys.PAGE_SIZE, pageSize.toString());
 
     setSearchParams(searchParams);
   };

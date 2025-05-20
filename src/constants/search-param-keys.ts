@@ -1,4 +1,4 @@
-export const searchParamKeys = {
+export const SearchParamKeys = {
   PAGE_INDEX: 'pageIndex',
   KEYWORD: 'keyword',
   PAGE_SIZE: 'pageSize',

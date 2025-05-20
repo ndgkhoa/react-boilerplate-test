@@ -1,95 +1,30 @@
-import Container from '~/components/ui/container';
-// import { UserActions, UserList } from '../components/users';
+import { Flex } from 'antd';
 
-import { Space, Table, Tag } from 'antd';
-import type { TableProps } from 'antd';
-
-interface DataType {
-  key: string;
-  name: string;
-  age: number;
-  address: string;
-  tags: string[];
-}
+import { useQueryParams } from '~/hooks/use-query-params';
+import { SearchKeyword } from '~/components/inputs';
+import { Container } from '~/components/ui';
+import CreateUserModal from '~/features/role-control/user/components/create-user-model';
+import UserList from '~/features/role-control/user/components/user-list';
 
 const UsersPage = () => {
-  const columns: TableProps<DataType>['columns'] = [
-    {
-      title: 'Name',
-      dataIndex: 'name',
-      key: 'name',
-      render: (text) => <a>{text}</a>,
-    },
-    {
-      title: 'Age',
-      dataIndex: 'age',
-      key: 'age',
-    },
-    {
-      title: 'Address',
-      dataIndex: 'address',
-      key: 'address',
-    },
-    {
-      title: 'Tags',
-      key: 'tags',
-      dataIndex: 'tags',
-      render: (_, { tags }) => (
-        <>
-          {tags.map((tag) => {
-            let color = tag.length > 5 ? 'geekblue' : 'green';
-            if (tag === 'loser') {
-              color = 'volcano';
-            }
-            return (
-              <Tag color={color} key={tag}>
-                {tag.toUpperCase()}
-              </Tag>
-            );
-          })}
-        </>
-      ),
-    },
-    {
-      title: 'Action',
-      key: 'action',
-      render: (_, record) => (
-        <Space size="middle">
-          <a>Invite {record.name}</a>
-          <a>Delete</a>
-        </Space>
-      ),
-    },
-  ];
-
-  const data: DataType[] = [
-    {
-      key: '1',
-      name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park',
-      tags: ['nice', 'developer'],
-    },
-    {
-      key: '2',
-      name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park',
-      tags: ['loser'],
-    },
-    {
-      key: '3',
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sydney No. 1 Lake Park',
-      tags: ['cool', 'teacher'],
-    },
-  ];
+  const { queryParams, setQueryParams } = useQueryParams();
   return (
-    // <Container title="Danh sách người dùng" extraRight={<UserActions />}>
-    <Container title="Danh sách người dùng">
-      {/* <UserList /> */}
-      <Table<DataType> columns={columns} dataSource={data} />;
+    <Container title="Danh sách người dùng" extraRight={<CreateUserModal />}>
+      <Flex align="center" justify="start" gap="small" className="mb-4">
+        <SearchKeyword placeholder="Tìm kiếm" className="max-w-[12rem]" />
+      </Flex>
+      <UserList
+        searchParams={{
+          keyword: queryParams.keyword,
+          pageIndex: queryParams.page,
+          pageSize: queryParams.pageSize,
+        }}
+        pagination={{
+          current: queryParams.page,
+          pageSize: queryParams.pageSize,
+          onChange: (page: number, pageSize: number) => setQueryParams({ page, pageSize }),
+        }}
+      />
     </Container>
   );
 };
