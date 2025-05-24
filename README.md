@@ -23,16 +23,12 @@ Go to the project directory
 Install dependencies
 
 ```bash
-  npm install
-  yarn install
   pnpm install
 ```
 
 Start the server
 
 ```bash
-  npm run dev
-  yarn dev
   pnpm run dev
 ```
 
@@ -41,16 +37,12 @@ Start the server
 To deploy this project run
 
 ```bash
-  npm run build
-  yarn build
   pnpm build
 ```
 
 Start the server
 
 ```bash
-  npm run start
-  yarn start
   pnpm start
 ```
 

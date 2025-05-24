@@ -1,13 +1,11 @@
 import type { TableProps } from 'antd';
-import { Checkbox, Empty, Space, Table } from 'antd';
-// import dayjs from 'dayjs';
+import { Empty, Space, Table } from 'antd';
 
 import { useUserList } from '../hooks/queries/use-user-list';
 import type { User, UserSearchParams } from '../types/User';
-// import { DateTimeFormat } from '~/constants/DateTimeFormat';
 import { useQueryParams } from '~/hooks/use-query-params';
-// import UpdateStandardFlightHoursModal from '~/features/catalog/standard-flight-hours/components/update-standard-flight-hours-modal';
-// import DeleteStandardFlightHoursConfirmation from '~/features/catalog/standard-flight-hours/components/delete-standard-flight-hours-confirmation';
+import UpdateUserModal from '~/features/role-control/user/components/update-user-model';
+import DeleteUserConfirmation from '~/features/role-control/user/components/delete-user-confirmation';
 import ErrorPage from '~/components/errors/error-page';
 
 const UserList = (props: TableProps<User> & { searchParams?: UserSearchParams }) => {
@@ -29,24 +27,21 @@ const UserList = (props: TableProps<User> & { searchParams?: UserSearchParams })
   };
 
   const columns: TableProps<User>['columns'] = [
-    // {
-    //   title: '-',
-    //   dataIndex: 'Id',
-    //   key: 'Id',
-    //   align: 'center' as const,
-    //   render: (value, record) => {
-    //     return (
-    //       <Space size={2}>
-    //         <UpdateStandardFlightHoursModal standardFlightHours={record} />
-    //         <DeleteStandardFlightHoursConfirmation
-    //           standardFlightHoursId={value}
-    //           onDeleteSuccess={handleDeleteSuccess}
-    //         />
-    //       </Space>
-    //     );
-    //   },
-    //   width: 100,
-    // },
+    {
+      title: '-',
+      dataIndex: 'Id',
+      key: 'Id',
+      align: 'center' as const,
+      render: (value, record) => {
+        return (
+          <Space size={2}>
+            <UpdateUserModal user={record} />
+            <DeleteUserConfirmation userId={value} onDeleteSuccess={handleDeleteSuccess} />
+          </Space>
+        );
+      },
+      width: 100,
+    },
     {
       title: 'STT',
       dataIndex: 'Id',
@@ -65,16 +60,6 @@ const UserList = (props: TableProps<User> & { searchParams?: UserSearchParams })
       key: 'UserName',
       width: 200,
     },
-    // {
-    //   title: 'Thời gian áp dụng',
-    //   dataIndex: 'EffectiveDate',
-    //   key: 'EffectiveDate',
-    //   width: 200,
-    //   render: (value) => {
-    //     const date = dayjs(value);
-    //     return date.isValid() ? date.format(DateTimeFormat.viDate) : '';
-    //   },
-    // },
     {
       title: 'Họ và tên',
       dataIndex: 'FullName',
@@ -93,20 +78,6 @@ const UserList = (props: TableProps<User> & { searchParams?: UserSearchParams })
       key: 'PhoneNumber',
       width: 200,
     },
-    // {
-    //   title: 'Ghi chú',
-    //   dataIndex: 'Note',
-    //   key: 'Note',
-    //   width: 300,
-    // },
-    // {
-    //   title: 'Không sử dụng',
-    //   dataIndex: 'IsUsed',
-    //   key: 'IsUsed',
-    //   align: 'center' as const,
-    //   width: 150,
-    //   render: (value) => <Checkbox checked={!value} disabled />,
-    // },
   ];
 
   if (userQuery.isError) {

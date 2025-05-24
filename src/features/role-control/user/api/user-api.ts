@@ -3,12 +3,7 @@ import type { AxiosRequestConfig } from 'axios';
 import { axiosClient } from '~/config/axios';
 import { env } from '~/config/env';
 import type { BaseResponse } from '~/types';
-import type {
-  CreateUserBody,
-  UpdateUserBody,
-  User,
-  UserSearchParams,
-} from '~/features/role-control/user/types/User';
+import type { User, UserSearchParams } from '~/features/role-control/user/types/User';
 
 const BASE_URL = `${env.VITE_BASE_API_URL}/user`;
 
@@ -23,11 +18,19 @@ export const userApi = {
   getInfoMine: () => {
     return axiosClient.get<{ User: User; Permissions: unknown[] }>(`${BASE_URL}/get-info-mine`);
   },
-  create: (body: CreateUserBody) => {
-    return axiosClient.post(`${BASE_URL}/create`, body);
+  create: (formData: FormData) => {
+    return axiosClient.post(`${BASE_URL}/create`, formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
   },
-  update: ({ Id, ...body }: UpdateUserBody) => {
-    return axiosClient.put(`${BASE_URL}/update/${Id}`, body);
+  update: (body: { Id: string; formData: FormData }) => {
+    return axiosClient.patch(`${BASE_URL}/update/${body.Id}`, body.formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+      },
+    });
   },
   delete: (id: User['Id']) => {
     return axiosClient.delete(`${BASE_URL}/delete/${id}`);

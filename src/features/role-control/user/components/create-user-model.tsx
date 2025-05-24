@@ -12,7 +12,10 @@ const CreateUserModal = () => {
           Tạo mới
         </Button>
       </Modal.Opens>
-      <Modal.Window name="create-user-modal" modalProps={{ title: 'Thêm người dùng' }}>
+      <Modal.Window
+        name="create-user-modal"
+        modalProps={{ title: 'Tạo người dùng', width: '900px' }}
+      >
         <UserForm />
       </Modal.Window>
     </Modal>

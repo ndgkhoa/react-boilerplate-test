@@ -8,7 +8,7 @@ import { useAuthStore } from '~/features/auth/hooks/use-auth-store';
 import { AuthProviders } from '~/features/auth/types/AuthProviders';
 
 type LoginFormType = {
-  Email: string;
+  UserName: string;
   Password: string;
 };
 
@@ -56,15 +56,15 @@ export const LoginForm = () => {
       <Divider plain>Hoặc</Divider>
       <Form disabled={disabled} form={form} size="large" layout="vertical" onFinish={onLogin}>
         <Form.Item<LoginFormType>
-          label="Email"
-          name="Email"
+          name="UserName"
+          label="Tên đăng nhập"
           rules={[{ required: true, message: 'Không được bỏ trống trường này' }]}
         >
           <Input size="large" />
         </Form.Item>
         <Form.Item<LoginFormType>
-          label="Mật khẩu"
           name="Password"
+          label="Mật khẩu"
           rules={[{ required: true, message: 'Không được bỏ trống trường này' }]}
         >
           <Input.Password size="large" />

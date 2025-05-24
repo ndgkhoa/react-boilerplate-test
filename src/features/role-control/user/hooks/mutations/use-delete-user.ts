@@ -1,28 +1,27 @@
-// import { useIsMutating, useMutation, useQueryClient } from '@tanstack/react-query';
+import { useIsMutating, useMutation, useQueryClient } from '@tanstack/react-query';
 
-// import { queryClient } from '~/config/query-client';
+import { queryClient } from '~/config/query-client';
+import { userApi } from '~/features/role-control/user/api/user-api';
+import { userKeys } from '~/features/role-control/user/constants/user-keys';
 
-// import { standardFlightHoursApi } from '~/features/catalog/standard-flight-hours/api/standard-flight-hours-api';
-// import { standardFlightHoursKeys } from '~/features/catalog/standard-flight-hours/constants/standard-flight-hours-keys';
+type Variables = Parameters<typeof userApi.delete>[0];
+type Data = Awaited<ReturnType<typeof userApi.delete>>;
 
-// type Variables = Parameters<typeof standardFlightHoursApi.delete>[0];
-// type Data = Awaited<ReturnType<typeof standardFlightHoursApi.delete>>;
+queryClient.setMutationDefaults(userKeys.delete(), {
+  mutationFn: (vars: Variables) => userApi.delete(vars),
+});
 
-// queryClient.setMutationDefaults(standardFlightHoursKeys.delete(), {
-//   mutationFn: (vars: Variables) => standardFlightHoursApi.delete(vars),
-// });
+export const useDeleteUser = () => {
+  const queryClient = useQueryClient();
+  const mutation = useMutation<Data, Error, Variables>({
+    mutationKey: userKeys.delete(),
+  });
 
-// export const useDeleteStandardFlightHours = () => {
-//   const queryClient = useQueryClient();
-//   const mutation = useMutation<Data, Error, Variables>({
-//     mutationKey: standardFlightHoursKeys.delete(),
-//   });
+  const isMutating = useIsMutating({ mutationKey: userKeys.delete() });
 
-//   const isMutating = useIsMutating({ mutationKey: standardFlightHoursKeys.delete() });
+  const invalidate = async () => {
+    await queryClient.invalidateQueries({ queryKey: userKeys.all });
+  };
 
-//   const invalidate = async () => {
-//     await queryClient.invalidateQueries({ queryKey: standardFlightHoursKeys.all });
-//   };
-
-//   return { ...mutation, invalidate, isPending: mutation.isPending || Boolean(isMutating) };
-// };
+  return { ...mutation, invalidate, isPending: mutation.isPending || Boolean(isMutating) };
+};
