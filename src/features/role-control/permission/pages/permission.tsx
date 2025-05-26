@@ -6,14 +6,14 @@ import { Container } from '~/components/ui';
 import CreateUserModal from '~/features/role-control/user/components/create-user-model';
 import UserList from '~/features/role-control/user/components/user-list';
 
-const UsersPage = () => {
+const PermissionPage = () => {
   const { queryParams, setQueryParams } = useQueryParams();
   return (
     <Container
-      title="Danh sách người dùng"
+      title="Danh sách quyền"
       extraRight={
         <Space>
-          <CreateUserModal />
+          {/* <CreateUserModal /> */}
           <SearchKeyword size="large" className="max-w-[12rem]" placeholder="Tìm kiếm" />
         </Space>
       }
@@ -34,4 +34,4 @@ const UsersPage = () => {
   );
 };
 
-export default UsersPage;
+export default PermissionPage;

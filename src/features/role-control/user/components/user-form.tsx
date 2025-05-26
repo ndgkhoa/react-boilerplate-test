@@ -51,7 +51,7 @@ const UserForm = (props: Props) => {
     formData.append('PhoneNumber', values.PhoneNumber);
     updateMutation.mutate(
       {
-        Id: props?.user?.Id,
+        id: props?.user?.Id,
         formData,
       },
       {

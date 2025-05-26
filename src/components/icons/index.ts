@@ -1,2 +1,2 @@
-export * from './google';
-export * from './microsoft';
+export * from '~/components/icons/google';
+export * from '~/components/icons/microsoft';

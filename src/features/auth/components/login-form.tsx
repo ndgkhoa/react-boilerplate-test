@@ -2,8 +2,8 @@ import { Divider, Input, Button, Form, Flex, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 
 import { GoogleIcon } from '~/components/icons';
+import { useLoginWithGoogle } from '~/features/auth/hooks/mutations/use-login-with-google';
 import { useLoginWithEmail } from '~/features/auth/hooks/mutations/use-login-with-email';
-import { useLoginWithGoogle } from '../hooks/mutations/use-login-with-google';
 import { useAuthStore } from '~/features/auth/hooks/use-auth-store';
 import { AuthProviders } from '~/features/auth/types/AuthProviders';
 

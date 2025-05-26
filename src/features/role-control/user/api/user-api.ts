@@ -25,8 +25,8 @@ export const userApi = {
       },
     });
   },
-  update: (body: { Id: string; formData: FormData }) => {
-    return axiosClient.patch(`${BASE_URL}/update/${body.Id}`, body.formData, {
+  update: ({ id, formData }: { id: string; formData: FormData }) => {
+    return axiosClient.patch(`${BASE_URL}/update/${id}`, formData, {
       headers: {
         'Content-Type': 'multipart/form-data',
       },

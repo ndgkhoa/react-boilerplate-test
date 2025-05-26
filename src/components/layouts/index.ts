@@ -1,3 +1,3 @@
-export * from './auth-layout';
-export * from './main-layout';
-export * from './page-layout';
+export * from '~/components/layouts/auth-layout';
+export * from '~/components/layouts/main-layout';
+export * from '~/components/layouts/page-layout';

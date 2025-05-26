@@ -1,12 +1,14 @@
 import type { TableProps } from 'antd';
 import { Empty, Space, Table } from 'antd';
+import dayjs from 'dayjs';
 
-import { useUserList } from '../hooks/queries/use-user-list';
-import type { User, UserSearchParams } from '../types/User';
+import ErrorPage from '~/components/errors/error-page';
+import { DateTimeFormat } from '~/constants/datetime-format';
 import { useQueryParams } from '~/hooks/use-query-params';
+import { useUserList } from '~/features/role-control/user/hooks/queries/use-user-list';
+import type { User, UserSearchParams } from '~/features/role-control/user/types/User';
 import UpdateUserModal from '~/features/role-control/user/components/update-user-model';
 import DeleteUserConfirmation from '~/features/role-control/user/components/delete-user-confirmation';
-import ErrorPage from '~/components/errors/error-page';
 
 const UserList = (props: TableProps<User> & { searchParams?: UserSearchParams }) => {
   const { searchParams, ...tableProps } = props;
@@ -34,7 +36,7 @@ const UserList = (props: TableProps<User> & { searchParams?: UserSearchParams })
       align: 'center' as const,
       render: (value, record) => {
         return (
-          <Space size={2}>
+          <Space>
             <UpdateUserModal user={record} />
             <DeleteUserConfirmation userId={value} onDeleteSuccess={handleDeleteSuccess} />
           </Space>
@@ -55,7 +57,7 @@ const UserList = (props: TableProps<User> & { searchParams?: UserSearchParams })
       width: 100,
     },
     {
-      title: 'UserName',
+      title: 'Tên đăng nhập',
       dataIndex: 'UserName',
       key: 'UserName',
       width: 200,
@@ -78,10 +80,18 @@ const UserList = (props: TableProps<User> & { searchParams?: UserSearchParams })
       key: 'PhoneNumber',
       width: 200,
     },
+    {
+      title: 'Ngày tạo',
+      dataIndex: 'CreatedDate',
+      key: 'CreatedDate',
+      width: 200,
+      align: 'center' as const,
+      render: (value) => <span>{dayjs(value).format(DateTimeFormat.viDate)}</span>,
+    },
   ];
 
   if (userQuery.isError) {
-    return <ErrorPage subTitle={userQuery.error.message ?? ''} />;
+    return <ErrorPage subTitle={userQuery.error.message} />;
   }
 
   return (
@@ -92,7 +102,7 @@ const UserList = (props: TableProps<User> & { searchParams?: UserSearchParams })
       loading={userQuery.isPending}
       dataSource={userQuery.data?.data.Data}
       columns={columns}
-      scroll={{ x: 1250 }}
+      scroll={{ x: 1200 }}
       pagination={{
         hideOnSinglePage: true,
         total: userQuery.data?.data.TotalRecord,

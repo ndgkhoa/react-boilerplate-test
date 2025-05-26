@@ -1,1 +1,1 @@
-export * from './search-keyword';
+export * from '~/components/inputs/search-keyword';

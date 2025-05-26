@@ -1,10 +1,10 @@
 import { App, Button } from 'antd';
-import { Trash2 } from 'lucide-react';
+import { DeleteOutlined } from '@ant-design/icons';
 
-import { ConfirmationButton } from '~/components/buttons';
+import { Popconfirm, Tooltip } from '~/components/ui';
 import { useDeleteUser } from '~/features/role-control/user/hooks/mutations/use-delete-user';
-import { ServiceMessage } from '~/utils/service-message';
 import type { User } from '~/features/role-control/user/types/User';
+import { ServiceMessage } from '~/utils/service-message';
 
 const DeleteUserConfirmation = ({
   userId,
@@ -31,9 +31,20 @@ const DeleteUserConfirmation = ({
   };
 
   return (
-    <ConfirmationButton onOk={() => onDeleteClick(userId)}>
-      <Button danger type="text" icon={<Trash2 size={18} strokeWidth={1.5} />} />
-    </ConfirmationButton>
+    <Popconfirm
+      title="Xóa người dùng"
+      description="Bạn chắc chắn muốn xóa người dùng này?"
+      onConfirm={() => onDeleteClick(userId)}
+    >
+      <Tooltip title="Xóa người dùng">
+        <Button
+          danger
+          size="small"
+          type="text"
+          icon={<DeleteOutlined style={{ fontSize: 18 }} />}
+        />
+      </Tooltip>
+    </Popconfirm>
   );
 };
 

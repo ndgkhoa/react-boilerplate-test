@@ -17,7 +17,4 @@ export type UpdateUserBody = Partial<CreateUserBody> & {
   Id: User['Id'];
 };
 
-export type UserSearchParams = Pick<
-  BaseSearchParams,
-  'pageSize' | 'pageIndex' | 'keyword' | 'filter'
->;
+export type UserSearchParams = Pick<BaseSearchParams, 'pageSize' | 'pageIndex' | 'keyword'>;

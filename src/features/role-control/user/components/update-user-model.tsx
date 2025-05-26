@@ -1,9 +1,9 @@
 import { Button } from 'antd';
-import { PencilLine } from 'lucide-react';
+import { EditOutlined } from '@ant-design/icons';
 
-import { Modal } from '~/components/ui';
+import { Modal, Tooltip } from '~/components/ui';
 import UserForm from '~/features/role-control/user/components/user-form';
-import type { User } from '../types/User';
+import type { User } from '~/features/role-control/user/types/User';
 
 const UpdateUserModal = ({ user }: { user?: User }) => {
   if (!user) return null;
@@ -13,7 +13,13 @@ const UpdateUserModal = ({ user }: { user?: User }) => {
   return (
     <Modal>
       <Modal.Opens opens={modalName}>
-        <Button icon={<PencilLine color="#facc15" size={18} strokeWidth={1.5} />} type="text" />
+        <Tooltip title="Cập nhật người dùng">
+          <Button
+            size="small"
+            type="text"
+            icon={<EditOutlined style={{ color: '#eab308', fontSize: 18 }} />}
+          />
+        </Tooltip>
       </Modal.Opens>
       <Modal.Window name={modalName} modalProps={{ title: 'Cập nhật người dùng', width: '900px' }}>
         <UserForm user={user} />

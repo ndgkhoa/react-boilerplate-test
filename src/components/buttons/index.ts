@@ -1,1 +1,1 @@
-export * from './confirmation-button';
+export * from '~/components/buttons/confirmation-button';
