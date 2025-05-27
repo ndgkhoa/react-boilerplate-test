@@ -5,14 +5,19 @@ import dayjs from 'dayjs';
 import ErrorPage from '~/components/errors/error-page';
 import { DateTimeFormat } from '~/constants/datetime-format';
 import { useQueryParams } from '~/hooks/use-query-params';
-import { useUserList } from '~/features/role-control/user/hooks/queries/use-user-list';
-import type { User, UserSearchParams } from '~/features/role-control/user/types/User';
-import UpdateUserModal from '~/features/role-control/user/components/update-user-model';
-import DeleteUserConfirmation from '~/features/role-control/user/components/delete-user-confirmation';
+import { usePermissionList } from '../hooks/queries/use-permission-list';
+import type {
+  Permission,
+  PermissionSearchParams,
+} from '~/features/role-control/permission/types/Permission';
+import UpdatePermissionModal from '~/features/role-control/permission/components/update-permission-model';
+import DeletePermissionConfirmation from '~//features/role-control/permission/components/delete-permission-confirmation';
 
-const UserList = (props: TableProps<User> & { searchParams?: UserSearchParams }) => {
+const PermissionList = (
+  props: TableProps<Permission> & { searchParams?: PermissionSearchParams }
+) => {
   const { searchParams, ...tableProps } = props;
-  const userQuery = useUserList(searchParams);
+  const userQuery = usePermissionList(searchParams);
 
   const { queryParams, setQueryParams } = useQueryParams();
 
@@ -28,7 +33,7 @@ const UserList = (props: TableProps<User> & { searchParams?: UserSearchParams })
     setQueryParams({ page: newPage, pageSize });
   };
 
-  const columns: TableProps<User>['columns'] = [
+  const columns: TableProps<Permission>['columns'] = [
     {
       title: '-',
       dataIndex: 'Id',
@@ -37,8 +42,11 @@ const UserList = (props: TableProps<User> & { searchParams?: UserSearchParams })
       render: (value, record) => {
         return (
           <Space>
-            <UpdateUserModal user={record} />
-            <DeleteUserConfirmation userId={value} onDeleteSuccess={handleDeleteSuccess} />
+            <UpdatePermissionModal permission={record} />
+            <DeletePermissionConfirmation
+              permissionId={value}
+              onDeleteSuccess={handleDeleteSuccess}
+            />
           </Space>
         );
       },
@@ -57,27 +65,21 @@ const UserList = (props: TableProps<User> & { searchParams?: UserSearchParams })
       width: 100,
     },
     {
-      title: 'Tên đăng nhập',
-      dataIndex: 'UserName',
-      key: 'UserName',
+      title: 'Code',
+      dataIndex: 'PermissionCode',
+      key: 'PermissionCode',
       width: 200,
     },
     {
-      title: 'Họ và tên',
-      dataIndex: 'FullName',
-      key: 'FullName',
+      title: 'Quyền',
+      dataIndex: 'PermissionName',
+      key: 'PermissionName',
       width: 200,
     },
     {
-      title: 'Email',
-      dataIndex: 'Email',
-      key: 'Email',
-      width: 200,
-    },
-    {
-      title: 'Số điện thoại',
-      dataIndex: 'PhoneNumber',
-      key: 'PhoneNumber',
+      title: 'Mô tả',
+      dataIndex: 'Description',
+      key: 'Description',
       width: 200,
     },
     {
@@ -105,7 +107,7 @@ const UserList = (props: TableProps<User> & { searchParams?: UserSearchParams })
       loading={userQuery.isPending}
       dataSource={userQuery.data?.data.Data}
       columns={columns}
-      scroll={{ x: 1200 }}
+      scroll={{ x: 1000 }}
       pagination={{
         hideOnSinglePage: true,
         total: userQuery.data?.data.TotalRecord,
@@ -120,4 +122,4 @@ const UserList = (props: TableProps<User> & { searchParams?: UserSearchParams })
   );
 };
 
-export default UserList;
+export default PermissionList;

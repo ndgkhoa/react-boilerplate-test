@@ -51,7 +51,7 @@ const UserForm = (props: Props) => {
     formData.append('PhoneNumber', values.PhoneNumber);
     updateMutation.mutate(
       {
-        id: props?.user?.Id,
+        Id: props?.user?.Id,
         formData,
       },
       {
@@ -87,7 +87,6 @@ const UserForm = (props: Props) => {
         >
           <UserAvatar src={props.user?.Avatar} />
         </Form.Item>
-
         <Form.Item<FormValues>
           name="UserName"
           label="Tên đăng nhập"

@@ -8,6 +8,6 @@ export default defineConfig({
   plugins: [react(), tailwindcss()],
   css: { devSourcemap: true },
   resolve: { alias: { '~': path.resolve(__dirname, './src') } },
-  server: { port: 3000 },
+  server: { host: true, port: 3000 },
   build: { outDir: './build' },
 });
