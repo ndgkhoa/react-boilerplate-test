@@ -1,7 +1,6 @@
 import { useIsMutating, useMutation, useQueryClient } from '@tanstack/react-query';
 
 import { queryClient } from '~/config/query-client';
-
 import { permissionApi } from '~/features/role-control/permission/api/permission-api';
 import { permissionKeys } from '~/features/role-control/permission/constants/permission-keys';
 

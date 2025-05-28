@@ -3,22 +3,22 @@ import { Space } from 'antd';
 import { useQueryParams } from '~/hooks/use-query-params';
 import { SearchKeyword } from '~/components/inputs';
 import { Container } from '~/components/ui';
-import CreatePermissonModal from '~/features/role-control/permission/components/create-permission-model';
-import PermissionList from '~/features/role-control/permission/components/permission-list';
+import CreateRoleModal from '~/features/role-control/role/components/role/create-role-model';
+import RoleList from '~/features/role-control/role/components/role/role-list';
 
-const Permission = () => {
+const Role = () => {
   const { queryParams, setQueryParams } = useQueryParams();
   return (
     <Container
-      title="Danh sách quyền"
+      title="Danh sách nhóm quyền"
       extraRight={
         <Space>
-          <CreatePermissonModal />
+          <CreateRoleModal />
           <SearchKeyword size="large" className="max-w-[12rem]" placeholder="Tìm kiếm" />
         </Space>
       }
     >
-      <PermissionList
+      <RoleList
         searchParams={{
           keyword: queryParams.keyword,
           pageIndex: queryParams.page,
@@ -34,4 +34,4 @@ const Permission = () => {
   );
 };
 
-export default Permission;
+export default Role;

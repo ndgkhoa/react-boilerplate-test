@@ -4,7 +4,7 @@ import { memo } from 'react';
 
 export const Popconfirm = memo((props: PopconfirmProps) => {
   const popconfirmProps: PopconfirmProps = {
-    destroyTooltipOnHide: true,
+    destroyOnHidden: true,
     cancelText: 'Hủy',
     okText: 'Xác nhận',
     ...props,

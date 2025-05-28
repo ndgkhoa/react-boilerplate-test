@@ -6,7 +6,7 @@ import type { TooltipRef } from 'antd/es/tooltip';
 export const Tooltip = memo(
   forwardRef((props: TooltipProps, ref: Ref<TooltipRef>) => {
     const tooltipProps: TooltipProps = {
-      destroyTooltipOnHide: true,
+      destroyOnHidden: true,
       ...props,
     };
     return <AntTooltip ref={ref} {...tooltipProps} />;

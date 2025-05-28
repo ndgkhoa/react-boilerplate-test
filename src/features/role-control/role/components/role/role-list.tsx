@@ -1,23 +1,20 @@
 import type { TableProps } from 'antd';
 import { Empty, Space, Table } from 'antd';
+import { useNavigate } from 'react-router-dom';
 import dayjs from 'dayjs';
 
 import ErrorPage from '~/components/errors/error-page';
 import { DateTimeFormat } from '~/constants/datetime-format';
 import { useQueryParams } from '~/hooks/use-query-params';
-import { usePermissionList } from '~/features/role-control/permission/hooks/queries/use-permission-list';
-import type {
-  Permission,
-  PermissionSearchParams,
-} from '~/features/role-control/permission/types/Permission';
-import UpdatePermissionModal from '~/features/role-control/permission/components/update-permission-model';
-import DeletePermissionConfirmation from '~/features/role-control/permission/components/delete-permission-confirmation';
+import { useRoleList } from '~/features/role-control/role/hooks/role/queries/use-role-list';
+import type { Role, RoleSearchParams } from '~/features/role-control/role/types/Role';
+import UpdateRoleModal from '~/features/role-control/role/components/role/update-role-model';
+import DeleteRoleConfirmation from '~/features/role-control/role/components/role/delete-role-confirmation';
 
-const PermissionList = (
-  props: TableProps<Permission> & { searchParams?: PermissionSearchParams }
-) => {
+const RoleList = (props: TableProps<Role> & { searchParams?: RoleSearchParams }) => {
   const { searchParams, ...tableProps } = props;
-  const permissionQuery = usePermissionList(searchParams);
+  const navigate = useNavigate();
+  const roleQuery = useRoleList(searchParams);
 
   const { queryParams, setQueryParams } = useQueryParams();
 
@@ -25,7 +22,7 @@ const PermissionList = (
     const currentPage = queryParams.page || 1;
     const pageSize = queryParams.pageSize || 10;
 
-    const totalRecordsAfterDelete = (permissionQuery.data?.data?.TotalRecord ?? 1) - 1;
+    const totalRecordsAfterDelete = (roleQuery.data?.data?.TotalRecord ?? 1) - 1;
     const totalPagesAfterDelete = Math.ceil(totalRecordsAfterDelete / pageSize);
 
     const newPage =
@@ -33,7 +30,7 @@ const PermissionList = (
     setQueryParams({ page: newPage, pageSize });
   };
 
-  const columns: TableProps<Permission>['columns'] = [
+  const columns: TableProps<Role>['columns'] = [
     {
       title: '-',
       dataIndex: 'Id',
@@ -42,11 +39,8 @@ const PermissionList = (
       render: (value, record) => {
         return (
           <Space>
-            <UpdatePermissionModal permission={record} />
-            <DeletePermissionConfirmation
-              permissionId={value}
-              onDeleteSuccess={handleDeleteSuccess}
-            />
+            <UpdateRoleModal role={record} />
+            <DeleteRoleConfirmation roleId={value} onDeleteSuccess={handleDeleteSuccess} />
           </Space>
         );
       },
@@ -65,15 +59,9 @@ const PermissionList = (
       width: 100,
     },
     {
-      title: 'Code',
-      dataIndex: 'PermissionCode',
-      key: 'PermissionCode',
-      width: 200,
-    },
-    {
-      title: 'Quyền',
-      dataIndex: 'PermissionName',
-      key: 'PermissionName',
+      title: 'Nhóm quyền',
+      dataIndex: 'RoleName',
+      key: 'RoleName',
       width: 200,
     },
     {
@@ -95,8 +83,8 @@ const PermissionList = (
     },
   ];
 
-  if (permissionQuery.isError) {
-    return <ErrorPage subTitle={permissionQuery.error.message} />;
+  if (roleQuery.isError) {
+    return <ErrorPage subTitle={roleQuery.error.message} />;
   }
 
   return (
@@ -104,13 +92,17 @@ const PermissionList = (
       bordered
       {...tableProps}
       rowKey="Id"
-      loading={permissionQuery.isPending}
-      dataSource={permissionQuery.data?.data.Data}
+      loading={roleQuery.isPending}
+      dataSource={roleQuery.data?.data.Data}
       columns={columns}
-      scroll={{ x: 1000 }}
+      scroll={{ x: 800 }}
+      onRow={(record) => ({
+        onClick: () => navigate(`/role-control/role/${record.Id}`),
+        style: { cursor: 'pointer' },
+      })}
       pagination={{
         hideOnSinglePage: true,
-        total: permissionQuery.data?.data.TotalRecord,
+        total: roleQuery.data?.data.TotalRecord,
         current: props?.searchParams?.pageIndex,
         pageSize: props.searchParams?.pageSize,
         ...props.pagination,
@@ -122,4 +114,4 @@ const PermissionList = (
   );
 };
 
-export default PermissionList;
+export default RoleList;

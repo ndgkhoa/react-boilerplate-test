@@ -6,7 +6,7 @@ import { Container } from '~/components/ui';
 import CreateUserModal from '~/features/role-control/user/components/create-user-model';
 import UserList from '~/features/role-control/user/components/user-list';
 
-const UsersPage = () => {
+const User = () => {
   const { queryParams, setQueryParams } = useQueryParams();
   return (
     <Container
@@ -34,4 +34,4 @@ const UsersPage = () => {
   );
 };
 
-export default UsersPage;
+export default User;

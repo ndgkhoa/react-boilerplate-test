@@ -1,5 +1,5 @@
 export const permissionKeys = {
-  all: ['permissions'],
+  all: ['permission'],
   lists: () => [...permissionKeys.all, 'list'],
   list: (params?: unknown) => [...permissionKeys.lists(), params],
   details: () => [...permissionKeys.all, 'details'],
